@@ -1,0 +1,114 @@
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  redis:
+    database: 1
+    host: 10.5.64.31
+    port: 6379
+    password: Huaxia123!
+    namespace: "cloud-job"
+    lettuce:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制） 默认 8
+        max-wait: -1  # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+        max-idle: 8   # 连接池中的最大空闲连接 默认 8
+        min-idle: 0   # 连接池中的最小空闲连接 默认 0
+
+  datasource:
+    url: jdbc:mysql://10.5.64.7:3306/scrm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: scrm
+    password: scrmdb_2021
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 指明是否在从池中取出连接前进行检验,如果检验失败, 则从池中去除连接并尝试取出另一个，
+      #注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串
+      test-on-borrow: false
+      # 指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除.
+      #注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串
+      test-while-idle: true
+      # 指明是否在归还到池中前进行检验，注意: 设置为true后如果要生效,
+      #validationQuery参数必须设置为非空字符串
+      test-on-return: false
+      # SQL查询,用来验证从连接池取出的连接,在将连接返回给调用者之前.
+      #如果指定,则查询必须是一个SQL SELECT并且必须返回至少一行记录
+      validation-query: select 1
+  quartz:
+    job-store-type: jdbc
+
+tldSkipPatterns: jaxb-impl-*.jar,jaxb-core-*.jar,activation.jar,metadata-extractor-*.jar,juh-*.jar,jurt-*.jar
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /
+  endpoint:
+    health:
+      show-details: always
+
+# mybatis-plus相关配置
+mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath*:/mapper/**/*Dao.xml
+  # 以下配置均有默认值,可以不设置
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: false
+    #数据库大写下划线转换
+    #capital-mode: true
+    #序列接口实现类配置
+    #key-generator: com.baomidou.springboot.xxx
+    #逻辑删除配置
+    #logic-delete-value: 0 # 逻辑已删除值(默认为 1)
+    #logic-not-delete-value: 1 # 逻辑未删除值(默认为 0)
+    #自定义填充策略接口实现
+    #    meta-object-handler: com.zhengqing.config.MyMetaObjectHandler
+    #自定义SQL注入器
+    #sql-injector: com.baomidou.springboot.xxx
+  configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    #    call-setters-on-nulls: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 解决oracle更新数据为null时无法转换报错，mysql不会出现此情况
+    jdbc-type-for-null: 'null'
+
+service-api:
+  uc: https://rancher.kuangheng.com
+  customer: https://rancher.kuangheng.com
+
+config:
+  app-name: cloud-job
+  digest-type: sm3
+  swagger:
+    title: cloud-job接口文档
+    description: cloud-job接口文档
+    version: 1.0.0
+    termsOfServiceUrl:
+    contactName:
+    contactUrl:
+    contactEmail:
+    license:
+    licenseUrl:
+    enable: true # 是否启用
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 50000
+        readTimeout: 1000000

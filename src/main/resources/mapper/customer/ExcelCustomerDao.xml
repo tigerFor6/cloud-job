@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisdge.cloud.excel.dao.ExcelCustomerDao">
+  <resultMap id="advanceScreenMap" type="com.wisdge.cloud.excel.entity.CustomerEntity">
+    <id column="ID" jdbcType="VARCHAR" javaType="java.lang.String" property="id" />
+    <result column="FULLNAME" jdbcType="VARCHAR" javaType="java.lang.String" property="fullname" />
+    <result column="GENDER" jdbcType="BOOLEAN" javaType="java.lang.String" property="gender" />
+    <result column="GENDER_DESC" jdbcType="BOOLEAN" javaType="java.lang.String" property="genderDesc" />
+    <result column="PHONE" jdbcType="VARCHAR" javaType="java.lang.String" property="phone" />
+    <result column="AGE" jdbcType="INTEGER" javaType="java.lang.String" property="age" />
+    <result column="ID_CARD" jdbcType="VARCHAR" javaType="java.lang.String" property="idCard" />
+    <result column="PROVINCE_ID" jdbcType="CHAR" javaType="java.lang.String" property="provinceId" />
+    <result column="CITY_ID" jdbcType="CHAR" javaType="java.lang.String" property="cityId" />
+    <result column="AREA_ID" jdbcType="CHAR" javaType="java.lang.String" property="areaId" />
+    <result column="COMMUNITY_ID" jdbcType="CHAR" javaType="java.lang.String" property="communityId" />
+    <result column="COUNTY_ID" jdbcType="CHAR" javaType="java.lang.String" property="countyId" />
+    <result column="FULL_ADDRESS" jdbcType="VARCHAR" javaType="java.lang.String" property="fullAddress" />
+    <result column="EMAIL" jdbcType="VARCHAR" javaType="java.lang.String" property="email" />
+    <result column="QQ" jdbcType="VARCHAR" javaType="java.lang.String" property="qq" />
+    <result column="WECHAT_ID" jdbcType="VARCHAR" javaType="java.lang.String" property="wechatId" />
+    <result column="WECHAT_FORM" jdbcType="VARCHAR" javaType="java.lang.String" property="wechatForm" />
+    <result column="DINGDING_ID" jdbcType="VARCHAR" javaType="java.lang.String" property="dingdingId" />
+    <result column="ORG_ID" jdbcType="BIGINT" javaType="java.lang.String" property="orgId" />
+    <result column="DEPT_ID" jdbcType="BIGINT" javaType="java.lang.String" property="deptId" />
+    <result column="AVATAR" jdbcType="VARCHAR" javaType="java.lang.String" property="avatar" />
+    <result column="LEVEL" javaType="java.lang.String" property="level" />
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" property="lastLoginTime" />
+    <result column="LAST_LOGIN_IP" jdbcType="VARCHAR" javaType="java.lang.String" property="lastLoginIp" />
+    <result column="STATUS" javaType="java.lang.String" property="status" />
+    <result column="CREATE_FORM" jdbcType="VARCHAR" javaType="java.lang.String" property="createForm" />
+    <result column="CREATE_BY" jdbcType="BIGINT" javaType="java.lang.String" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="BIGINT" javaType="java.lang.String" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" property="updateTime" />
+    <result column="REMARK" jdbcType="VARCHAR" javaType="java.lang.String" property="remark" />
+    <result column="PROVINCE_DESC" jdbcType="VARCHAR" javaType="java.lang.String" property="provinceDesc" />
+    <result column="CITY_DESC" jdbcType="VARCHAR" javaType="java.lang.String" property="cityDesc" />
+    <result column="AREA_DESC" jdbcType="VARCHAR" javaType="java.lang.String" property="areaDesc" />
+    <result column="COUNTY_DESC" jdbcType="VARCHAR" javaType="java.lang.String" property="countyDesc" />
+    <result column="COMMUNITY_DESC" jdbcType="VARCHAR" javaType="java.lang.String" property="communityDesc" />
+  </resultMap>
+
+  <insert id="batchCreate">
+    insert into customer(
+    ID,
+    FULLNAME,
+    GENDER,
+    PHONE,
+    AGE,
+    ID_CARD,
+    PROVINCE_ID,
+    CITY_ID,
+    AREA_ID,
+    COUNTY_ID,
+    COMMUNITY_ID,
+    FULL_ADDRESS,
+    EMAIL,
+    QQ,
+    WECHAT_ID,
+    WECHAT_FORM,
+    DINGDING_ID,
+    ORG_ID,
+    DEPT_ID,
+    AVATAR,
+    STATUS,
+    LAST_LOGIN_TIME,
+    LAST_LOGIN_IP,
+    REMARK,
+    CREATE_FORM,
+    CREATE_BY,
+    CREATE_TIME,
+    UPDATE_BY,
+    UPDATE_TIME
+    ) values
+    <foreach collection='list' index='index' separator=',' item='map'>
+      (
+      #{map.id},
+      #{map.fullname},
+      <choose>
+        <when test='map.gender!=null and !map.gender'>#{map.gender},</when>
+        <otherwise>-1,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.phone!=null and !map.phone'>#{map.phone},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.age!=null and !map.age'>#{map.age},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.idCard!=null'>#{map.idCard},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.provinceId!=null and !map.provinceId'>#{map.provinceId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.cityId!=null and !map.cityId'>#{map.cityId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.areaId!=null and !map.areaId'>#{map.areaId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.countyId!=null and !map.countyId'>#{map.countyId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.communityId!=null and !map.communityId'>#{map.communityId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.fullAddress!=null and !map.fullAddress'>#{map.fullAddress},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.email!=null and !map.email'>#{map.email},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.qq!=null and !map.qq'>#{map.qq},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.wechatId!=null and !map.wechatId'>#{map.wechatId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.wechatForm!=null and !map.wechatForm'>#{map.wechatForm},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.dingdingId!=null and !map.dingdingId'>#{map.dingdingId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.orgId!=null and !map.orgId'>#{map.orgId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.deptId!=null and !map.deptId'>#{map.deptId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.avatar!=null and !map.avatar'>#{map.avatar},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.status!=null'>#{map.status},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.lastLoginTime!=null and !map.lastLoginTime'>#{map.lastLoginTime},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.lastLoginIp!=null and !map.lastLoginIp'>#{map.lastLoginIp},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.remark!=null and !map.remark'>#{map.remark},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.createForm!=null and !map.createForm'>#{map.createForm},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.createBy!=null'>#{map.createBy},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      #{map.createTime},
+      <choose>
+        <when test='map.createBy!=null'>#{map.createBy},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      #{map.createTime}
+      )
+    </foreach>
+  </insert>
+
+  <insert id="batchCreateTemp">
+    INSERT INTO customer_temp(
+      ID,
+      TASK_ID,
+      EXCEPT_TYPE,
+      FULLNAME,
+      GENDER,
+      PHONE,
+      AGE,
+      ID_CARD,
+      PROVINCE_ID,
+      CITY_ID,
+      AREA_ID,
+      COUNTY_ID,
+      COMMUNITY_ID,
+      FULL_ADDRESS,
+      EMAIL,
+      QQ,
+      WECHAT_ID,
+      WECHAT_FORM,
+      DINGDING_ID,
+      ORG_ID,
+      DEPT_ID,
+      AVATAR,
+      STATUS,
+      `LEVEL`,
+      LAST_LOGIN_TIME,
+      LAST_LOGIN_IP,
+      REMARK,
+      CREATE_FORM,
+      CREATE_BY,
+      CREATE_TIME
+      ) values
+    <foreach collection="list" item="map" separator=",">
+      (
+      <choose>
+        <when test='map.id!=null and !map.id'>#{map.id},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.taskId!=null and !map.taskId'>#{map.taskId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.exceptType!=null and !map.exceptType'>#{map.exceptType},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.fullname!=null and !map.fullname'>#{map.fullname},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.gender!=null and !map.gender and map.gender != ""'>#{map.gender},</when>
+        <otherwise>-1,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.phone!=null and !map.phone'>#{map.phone},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.age!=null and !map.age and map.age != ""'>#{map.age},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.idCard!=null and !map.idCard'>#{map.idCard},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.provinceId!=null and !map.provinceId'>#{map.provinceId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.cityId!=null and !map.cityId'>#{map.cityId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.areaId!=null and !map.areaId'>#{map.areaId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.countyId!=null and !map.countyId'>#{map.countyId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.communityId!=null and !map.communityId'>#{map.communityId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.fullAddress!=null and !map.fullAddress'>#{map.fullAddress},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.email!=null and !map.email'>#{map.email},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.qq!=null and !map.qq'>#{map.qq},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.wechatId!=null and !map.wechatId'>#{map.wechatId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.wechatForm!=null and !map.wechatForm'>#{map.wechatForm},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.dingdingId!=null and !map.dingdingId'>#{map.dingdingId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.orgId!=null and !map.orgId'>#{map.orgId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.deptId!=null and !map.deptId'>#{map.deptId},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.avatar!=null and !map.avatar'>#{map.avatar},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.status!=null and !map.level'>#{map.status},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.level!=null and !map.level and map.level != ""'>#{map.level},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.lastLoginTime!=null and !map.lastLoginTime'>#{map.lastLoginTime},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.lastLoginIp!=null and !map.lastLoginIp'>#{map.lastLoginIp},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.remark!=null and !map.remark'>#{map.remark},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.createForm!=null and !map.createForm'>#{map.createForm},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      <choose>
+        <when test='map.createBy!=null and !map.idCard'>#{map.createBy},</when>
+        <otherwise>null,</otherwise>
+      </choose>
+      #{map.createTime}
+      )
+    </foreach>
+  </insert>
+
+  <select id="verifyPhone" resultType="java.lang.String">
+    select T1.phone
+    from customer T1
+    <where>
+      <if test='phones!=null'>
+        <foreach collection='phones' index='index' item='phone' open='AND T1.PHONE in (' separator=',' close=')'>
+          #{phone}
+        </foreach>
+      </if>
+      AND T1.STATUS > -1
+    </where>
+    ORDER BY T1.CREATE_TIME DESC
+  </select>
+
+  <update id="update">
+    update customer
+    <set>
+      <if test='map.fullname!=null and !map.fullname'>FULLNAME= #{map.fullname},</if>
+      <if test='map.gender!=null and !map.gender'>GENDER= #{map.gender},</if>
+      <if test='map.phone!=null and !map.phone'>PHONE= #{map.phone},</if>
+      <if test='map.age!=null'>AGE= #{map.age},</if>
+      <if test='map.idCard!=null'>ID_CARD= #{map.idCard},</if>
+      <if test='map.provinceId!=null'>PROVINCE_ID= #{map.provinceId},</if>
+      <if test='map.cityId!=null'>CITY_ID= #{map.cityId},</if>
+      <if test='map.areaId!=null'>AREA_ID= #{map.areaId},</if>
+      <if test='map.countyId!=null'>COUNTY_ID= #{map.countyId},</if>
+      <if test='map.communityId!=null'>COMMUNITY_ID= #{map.communityId},</if>
+      <if test='map.fullAddress!=null'>FULL_ADDRESS= #{map.fullAddress},</if>
+      <if test='map.email!=null'>EMAIL= #{map.email},</if>
+      <if test='map.qq!=null'>QQ=#{map.qq},</if>
+      <if test='map.wechatId!=null'>WECHAT_ID=#{map.wechatId},</if>
+      <if test='map.wechatForm!=null'>WECHAT_FORM=#{map.wechatForm},</if>
+      <if test='map.dingdingId!=null'>DINGDING_ID=#{map.dingdingId},</if>
+      <if test='map.orgId!=null'>ORG_ID= #{map.orgId},</if>
+      <if test='map.deptId!=null'>DEPT_ID= #{map.deptId},</if>
+      <if test='map.avatar!=null'>AVATAR= #{map.avatar},</if>
+      <if test='map.status!=null'>STATUS= #{map.status},</if>
+      <if test='map.level!=null'>LEVEL=#{map.level},</if>
+      <if test='map.lastLoginTime!=null'>LAST_LOGIN_TIME=#{map.lastLoginTime},</if>
+      <if test='map.lastLoginIp!=null'>LAST_LOGIN_IP=#{map.lastLoginIp},</if>
+      <if test='map.remark!=null'>REMARK=#{map.remark},</if>
+      <if test='map.updateBy!=null'>UPDATE_BY=#{map.updateBy},</if>
+      <if test='map.createForm!=null'>CREATE_FORM=#{map.createForm},</if>
+      <if test='map.updateTime!=null'>UPDATE_TIME=#{map.updateTime},</if>
+    </set>
+    <where>
+      AND ID=#{map.id}
+      AND STATUS > -1
+    </where>
+  </update>
+
+</mapper>

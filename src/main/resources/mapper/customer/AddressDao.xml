@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wisdge.cloud.excel.dao.AddressDao">
+
+    <select id="findProvince" resultType="com.wisdge.cloud.excel.entity.CAddressEntity">
+        SELECT T1.*
+        FROM c_province T1
+        <where>
+            <if test="map.provinceId !=null and !map.provinceId">
+                AND T1.PROVINCE_ID= #{map.provinceId}
+            </if>
+            <if test="map.provinceDesc !=null and !map.provinceDesc">
+                AND T1.PROVINCE_DESC= #{map.provinceDesc}
+            </if>
+            <if test="map.name !=null and !map.name">
+                AND T1.NAME= #{map.name}
+            </if>
+            <if test="map.pinyinPrefix !=null and !map.pinyinPrefix">
+                AND T1.PINYIN_PREFIX= {map.pinyinPrefix}
+            </if>
+        </where>
+        ORDER BY T1.PROVINCE_ID
+    </select>
+
+    <select id="findCity" resultType="com.wisdge.cloud.excel.entity.CAddressEntity">
+        SELECT straight_join
+            T1.*, T2.PROVINCE_DESC
+        FROM c_city T1
+            LEFT JOIN c_province T2 ON T2.province_id = T1.province_id
+        <where>
+            <if test="map.cityId !=null and !map.cityId">
+                AND T1.CITY_ID= #{map.cityId}
+            </if>
+            <if test="map.provinceId !=null and !map.provinceId">
+                AND T1.PROVINCE_ID= #{map.provinceId}
+            </if>
+            <if test="map.cityDesc !=null and !map.cityDesc">
+                AND T1.CITY_DESC= #{map.cityDesc}
+            </if>
+            <if test="map.name !=null and !map.name">
+                AND T1.NAME= #{map.name}
+            </if>
+            <if test="map.pinyinPrefix !=null and !map.pinyinPrefix">
+                AND T1.PINYIN_PREFIX= #{map.pinyinPrefix}
+            </if>
+        </where>
+        ORDER BY T1.CITY_ID
+    </select>
+
+    <select id="findArea" resultType="com.wisdge.cloud.excel.entity.CAddressEntity">
+        SELECT straight_join
+            T1.*, T2.PROVINCE_DESC, T3.CITY_DESC
+        FROM c_area T1
+        LEFT JOIN c_province T2 ON T2.province_id = T1.province_id
+        LEFT JOIN c_city T3 ON T3.city_id = T1.city_id
+        <where>
+            <if test="map.areaId !=null and !map.areaId">
+                AND T1.AREA_ID= #{map.areaId}
+            </if>
+            <if test="map.cityId !=null and !map.cityId">
+                AND T1.CITY_ID= #{map.cityId}
+            </if>
+            <if test="map.provinceId !=null and !map.provinceId">
+                AND T1.PROVINCE_ID= #{map.provinceId}
+            </if>
+            <if test="map.cityDesc !=null and !map.cityDesc">
+                AND T1.CITY_DESC= #{map.cityDesc}
+            </if>
+            <if test="map.name !=null and !map.name">
+                AND T1.NAME= #{map.name}
+            </if>
+            <if test="map.pinyinPrefix !=null and !map.pinyinPrefix">
+                AND T1.PINYIN_PREFIX= #{map.pinyinPrefix}
+            </if>
+        </where>
+        ORDER BY T1.AREA_ID
+    </select>
+
+    <select id="findCounty" resultType="com.wisdge.cloud.excel.entity.CAddressEntity">
+        SELECT straight_join
+            T1.*, T2.PROVINCE_DESC, T3.CITY_DESC, T4.AREA_DESC
+        FROM c_county T1
+        LEFT JOIN c_province T2 ON T2.province_id = T1.province_id
+        LEFT JOIN c_city T3 ON T3.city_id = T1.city_id
+        LEFT JOIN c_area T4 ON T4.area_id = T1.area_id
+        <where>
+            <if test="map.countyId !=null and !map.countyId">
+                AND T1.COUNTY_ID= #{map.countyId}
+            </if>
+            <if test="map.areaId !=null and !map.areaId">
+                AND T1.AREA_ID= #{map.areaId}
+            </if>
+            <if test="map.cityId !=null and !map.cityId">
+                AND T1.CITY_ID= #{map.cityId}
+            </if>
+            <if test="map.provinceId !=null and !map.provinceId">
+                AND T1.PROVINCE_ID= #{map.provinceId}
+            </if>
+            <if test="map.cityDesc !=null and !map.cityDesc">
+                AND T1.CITY_DESC= #{map.cityDesc}
+            </if>
+            <if test="map.name !=null and !map.name">
+                AND T1.NAME= #{map.name}
+            </if>
+            <if test="map.pinyinPrefix !=null and !map.pinyinPrefix">
+                AND T1.PINYIN_PREFIX= #{map.pinyinPrefix}
+            </if>
+        </where>
+        ORDER BY T1.COUNTY_ID
+    </select>
+
+    <select id="findCommunity" resultType="com.wisdge.cloud.excel.entity.CAddressEntity">
+        SELECT straight_join
+            T1.*, T2.PROVINCE_DESC, T3.CITY_DESC, T4.AREA_DESC, T5.COUNTY_DESC
+        FROM c_community T1
+        LEFT JOIN c_province T2 ON T2.province_id = T1.province_id
+        LEFT JOIN c_city T3 ON T3.city_id = T1.city_id
+        LEFT JOIN c_area T4 ON T4.area_id = T1.area_id
+        LEFT JOIN c_county T5 ON T5.county_id = T1.county_id
+        <where>
+            <if test="map.communityId !=null and !map.communityId">
+                AND T1.COMMUNITY_ID= #{map.communityId}
+            </if>
+            <if test="map.countyId !=null and !map.countyId">
+                AND T1.COUNTY_ID= #{map.countyId}
+            </if>
+            <if test="map.areaId !=null and !map.areaId">
+                AND T1.AREA_ID= #{map.areaId}
+            </if>
+            <if test="map.cityId !=null and !map.cityId">
+                AND T1.CITY_ID= #{map.cityId}
+            </if>
+            <if test="map.provinceId !=null and !map.provinceId">
+                AND T1.PROVINCE_ID= #{map.provinceId}
+            </if>
+            <if test="map.cityDesc !=null and !map.cityDesc">
+                AND T1.CITY_DESC= #{map.cityDesc}
+            </if>
+            <if test="map.name !=null and !map.name">
+                AND T1.NAME= #{map.name}
+            </if>
+            <if test="map.pinyinPrefix !=null and !map.pinyinPrefix">
+                AND T1.PINYIN_PREFIX= #{map.pinyinPrefix}
+            </if>
+        </where>
+        ORDER BY T1.COMMUNITY_ID
+    </select>
+
+    <select id="findAll" resultType="com.wisdge.cloud.excel.entity.CAddressEntity">
+        SELECT straight_join
+            T1.PROVINCE_ID, T1.PROVINCE_DESC, T2.CITY_ID, T2.CITY_DESC, T3.AREA_ID, T3.AREA_DESC
+        FROM c_province T1
+        LEFT JOIN c_city T2 ON T2.province_id = T1.province_id
+        LEFT JOIN c_area T3 ON T3.city_id = T2.city_id
+    </select>
+</mapper>

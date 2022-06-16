@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wisdge.cloud.user.dao.UserPerformanceDao">
+
+
+    <select id="updateByUserId" parameterType="String" >
+        UPDATE
+            USER_PERFORMANCE up
+        SET up.customer_num =(
+            select count(1) from user_customer uc where uc.user_id= up.user_id and uc.customer_id in (SELECT id from customer)
+        )
+          ,update_time = now()
+
+    </select>
+
+</mapper>

@@ -1,0 +1,20 @@
+server:
+  port: 9012
+  servlet:
+    context-path: /job
+
+
+nacos-server-addr: localhost:8848
+
+spring:
+  application:
+    name: cloud-job
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos-server-addr}
+      config:
+        enabled: true # 如果不想使用 Nacos 进行配置管理，设置为 false 即可
+        server-addr: ${nacos-server-addr} # Nacos Server 地址
+        group: DEFAULT_GROUP # 组，默认为 DEFAULT_GROUP
+        file-extension: yaml # 配置内容的数据格式，默认为 properties
